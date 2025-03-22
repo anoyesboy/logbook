@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block home %}<span>Home</span>{% endblock %}
+{% block content %}
+<div id="content">
+  <article><p>Index page</p></article>
+  <article>
+    <h3>Logbook Summary</h3>
+    <div>
+      <dl>
+        <dt>Total Flight Time</dt>
+        <dd>{{ totals.TT }} hr</dd>
+        <dt>Single-engine</dt>
+        <dd>{{ totals.SE }} hr</dd>
+        <dt>Cross Country</dt>
+        <dd>{{ totals.x_c}} hr</dd>
+      </dl>
+      <dl>
+        <dt>Pilot in Command</dt>
+        <dd>{{ totals.PIC }} hr</dd>
+        <dt>Multi-engine</dt>
+        <dd>{{ totals.ME }} hr</dd>
+        <dt>Night</dt>
+        <dd>{{ totals.night }} hr</dd>
+      </dl>
+    </div>
+    <dl>
+      <dt>Turbine PIC</dt>
+      <dd>{{ totals.TurbinePIC }} hr</dd>
+      <dt>Instrument</dt>
+      <dd>{{ totals.instrument }} hr</dd>
+    </dl>
+    <h3>Currency</h3>
+  </article>
+  <article>
+    <h3>Airplanes</h3>
+    <dl>
+      <dt>New Logbook airplane(s)</dt>
+      <dd>
+        {% if new_airplanes %}
+        {% for airplane in new_airplanes %}
+        <a href="{{ url_for("airplane.add_airplane", id=airplane.id) }}">{{ airplane.tail_number }}</a><br/>
+        {% endfor %}
+        {% else %}
+        None
+        {% endif %}
+      </dd>
+    </dl>
+    <h3>Airports</h3>
+    <dl>
+      <dt>New Logbook airport(s)</dt>
+      <dd>
+        {% if new_airports %}
+        {% for airport in new_airports %}
+        <a href="{{ url_for("airport.add_airport", id=airport.id) }}">{{ airport.identifier }}</a><br/>
+        {% endfor %}
+        {% else %}
+        None
+        {% endif %}
+      </dd>
+    </dl>
+  </article>
+
+</div>
+{% endblock %}

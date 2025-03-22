@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block home %}{% endblock %}
+{% block addflight %}{% endblock %}
+{% block displaylogbook %}{% endblock %}
+{% block airplanes %}{% endblock %}
+{% block airports %}{% endblock %}
+
+{% block logout %}<span>Login</span>{% endblock %}
+
+{% block content %}
+<form action="{{ url_for("auth.login") }}" method="POST">
+  {{ form.csrf_token }}
+  
+  <fieldset>
+    <h3>Welcome to my Logbook!</h3>
+    <dl>
+      <dt>{{ form.username.label }}</dt>
+      <dd>
+        {{ form.username(autofocus=autofocus) }}<br/>
+        {% if form.username.errors %}
+        {% for error in form.username.errors %}
+          <span class="fail">{{ error }}</span><br/>
+        {% endfor %}
+        {% endif %}
+      </dd>
+
+      <dt>{{ form.password.label }}</dt>
+      <dd>
+        {{ form.password }}<br/>
+        {% if form.password.errors %}
+        {% for error in form.password.errors %}
+          <span class="fail">{{ error }}</span><br/>
+        {% endfor %}
+        {% endif %}
+      </dd>
+    </dl>
+
+    <p>
+      <span>New User? <a class="register" href="{{ url_for("auth.register") }}">Register</a></span>
+      <input type="submit" value="Login"/>
+    </p>
+  </fieldset>
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pilot Logbook</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for("static", filename="images/favicon.ico") }}">
+    {% block style %}
+    <link href="{{ url_for("static", filename="style.css") }}" type="text/css" rel="stylesheet"/>
+    {% endblock %}
+  </head>
+  <body>
+    <div id="header">
+      <img src="{{ url_for("static", filename="images/airplane_130x84.jpg") }}"/>
+      <span class="title">Pilot Logbook</span>
+      <div id="nav">
+        {% block home %}<a href="{{ url_for("index") }}">Home</a>{% endblock %}
+        {% block addflight %}<a href="{{ url_for("flight.add_flight") }}">Add Flight</a>{% endblock %}
+        {% block displaylogbook %}<a href="{{ url_for("logbook.display_logbook") }}">Display Logbook</a>{% endblock %}
+        {% block airplanes %}<a href="{{ url_for("airplane.airplane_index") }}">Airplanes</a>{% endblock %}
+        {% block airports %}<a href="{{ url_for("airport.airport_index") }}">Airports</a>{% endblock %}
+        {% block logout %}<a href="{{ url_for("auth.logout") }}">Logout</a>{% endblock %}
+      </div>
+    </div>
+
+    <div id="message-bar">
+      {% block messages %}
+        {% for message in get_flashed_messages() %}
+        <span class="succuss">{{ message }}</span><br/>
+        {% endfor %}
+      {% endblock %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    {% block script %}
+    {% endblock %}
+
+  </body>
+</html>

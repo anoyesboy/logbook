@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block home %}{% endblock %}
+{% block addflight %}{% endblock %}
+{% block displaylogbook %}{% endblock %}
+{% block airplanes %}{% endblock %}
+{% block airports %}{% endblock %}
+
+{% block logout %}<span>Login</span>{% endblock %}
+
+{% block content %}
+<form action="{{ url_for("auth.register") }}" method="POST">
+  {{ form.csrf_token }}
+
+  <fieldset>
+    <h3>Register</h3>
+    <dl>
+      <dt>{{ form.username.label }}</dt>
+      <dd>
+        {{ form.username }}<br/>
+        {% if form.username.errors %}
+        {% for error in form.username.errors %}
+          <span>{{ error }}</span><br/>
+        {% endfor %}
+        {% endif %}
+      </dd>
+      <dt>{{ form.password.label }}</dt>
+      <dd>
+        {{ form.password }}<br/>
+        {% if form.password.errors %}
+        {% for error in form.password.errors %}
+          <span>{{ error }}</span><br/>
+        {% endfor %}
+        {% endif %}
+      </dd>
+    </dl>
+
+    <p>
+      <input type="submit" value="Submit"/>
+    </p>
+  </fieldset>
+
+</form>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{{ url_for("flight.edit_flight", id=flight.id) }}" method="POST">
+  {{ form.csrf_token }}
+  <div class="column">
+    <h3>Edit Flight {{ flight.id }}</h3>
+    <dl>
+      <dt>{{ form.date.label }}</dt>
+      <dd>{{ form.date(value=flight.date) }}</dd>
+      <dt>{{ form.reg.label }}</dt>
+      <dd>
+        {% for subfield in form.reg %}
+        {% if subfield.data == flight.reg %}
+        {{ subfield(checked=checked) }} {{ subfield.label }}<br/>
+        {% else %}
+        {{ subfield }} {{ subfield.label }}<br/>
+        {% endif %}
+        {% endfor %}
+      </dd>
+      <dt>{{ form.crew_position.label }}</dt>
+      <dd>
+        {% for subfield in form.crew_position %}
+        {% if subfield.data == flight.crew_position %}
+        {{ subfield(checked=checked) }} {{ subfield.label }}<br/>
+        {% else %}
+        {{ subfield }} {{ subfield.label }}<br/>
+        {% endif %}
+        {% endfor %}
+      </dd>
+      <dt>{{ form.tail_id.label }}</dt>
+      <dd>{{ form.tail_id }}</dd>
+      <dd id="new-tail-number">{{ form.new_tail_number(placeholder="Add") }}</dd>
+      <dt>{{ form.route.label }}</dt>
+      <dd>
+        {{ form.route(value=flight.route) }}<br/>
+        {% if form.route.errors %}
+        {% for error in form.route.errors %}{{ error }}<br/>{% endfor %}
+        {% endif %}
+      </dd>
+    </dl>
+    <h3>Takeoffs and Landings</h3>
+    <dl>
+      <dt>Takeoffs</dt>
+      <dd>Day {{ form.takeoff_day(value=flight.takeoff_day) }} Night {{ form.takeoff_night(value=flight.takeoff_night) }}</dd>
+      <dt>Landings</dt>
+      <dd>Day {{ form.landing_day(value=flight.landing_day) }} Night {{ form.landing_night(value=flight.landing_night) }}</dd>
+    </dl>
+  </div>
+
+  <div class="column">
+    <h3>Flight Times</h3>
+    <dl>
+      <dt>{{ form.flight_time.label }}</dt>
+      <dd>{{ form.flight_time(value=flight.flight_time, step=0.1) }}</dd>
+      <dt>{{ form.night.label }}</dt>
+      <dd>{{ form.night(value=flight.night, step=0.1) }}</dd>
+      <dt>Instrument Time</dt>
+      <dd>Actual {{ form.actual(value=flight.actual, step=0.1) }} Simulated {{ form.simulated(value=flight.simulated, step=0.1) }}</dd>
+      <dt>{{ form.simulator.label }}</dt>
+      <dd>{{ form.simulator(value=flight.simulator, step=0.1) }}</dd>
+      <dt>Check all that apply</dt>
+      <dd>
+        {% if flight.solo %}
+        {{ form.solo(checked=checked) }} {{ form.solo.label }}<br/>
+        {% else %}
+        {{ form.solo }} {{ form.solo.label }}<br/>
+        {% endif %}
+        {% if flight.x_c %}
+        {{ form.x_c(checked=checked) }} {{ form.x_c.label }}
+        {% else %}
+        {{ form.x_c }} {{ form.x_c.label }}
+        {% endif %}
+      </dd>
+    </dl>
+    <h3>Flight Instruction</h3>
+    <dl>
+      <dt>{{ form.instructor_id.label }}</dt>
+      <dd>{{ form.instructor_id }}</dd>
+      <dd id="new-instructor">{{ form.instructor(placeholder="Add") }}</dd>
+      <dt>{{ form.student_id.label }}</dt>
+      <dd>{{ form.student_id }}</dd>
+      <dd id="new-student">{{ form.student(placeholder="Add") }}</dd>
+    </dl>
+  </div>
+
+  <div class="column">
+    <h3>Instrument Procedures</h3>
+    <dl>
+      <dt>{{ form.approach.label }}</dt>
+      <dd>{{ form.approach }}</dd>
+      <dt>{{ form.hold.label }}</dt>
+      <dd>
+        {% if flight.hold %}
+        {{ form.hold(checked=checked) }} {{ form.hold.label }}
+        {% else %}
+        {{ form.hold }} {{ form.hold.label }}
+        {% endif %}
+      </dd>
+    </dl>
+    <h3>Remarks</h3>
+    {{ form.remarks(cols="32", rows="6", placeholder="Thoughts while flying ...") }}
+    <p><input type="submit" value="Submit"/></p>
+  </div>
+</form>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for("static", filename="js/flight_form.js") }}"></script>
+{% endblock %}

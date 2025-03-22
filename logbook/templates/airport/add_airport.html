@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{{ url_for("airport.add_airport", id=airport.id) }}" method="POST">
+  {{ form.csrf_token }}
+
+  <fieldset>
+    <h3>Add an Airport</h3>
+    <dl>
+      <dt>{{ form.identifier.label }}</dt>
+      <dd>
+        {{ form.identifier(value=airport.identifier) }}
+        {% if form.identifier.errors %}
+        {% for error in form.identifier.errors %}{{ error }}<br/>{% endfor %}
+        {% endif %}
+      </dd>
+      <dt>{{ form.city.label }}</dt>
+      <dd>{{ form.city }}</dd>
+      <dt>{{ form.state_id.label }}</dt>
+      <dd>
+        {{ form.state_id }}<br/>
+        {{ form.new_state.label }} {{ form.new_state }}
+      </dd>
+      <dt>{{ form.country_id.label }}</dt>
+      <dd>
+        {{ form.country_id }}<br/>
+        {{ form.new_country.label }} {{ form.new_country }}
+      </dd>
+    </dl>
+    <p><input type="submit" value="Submit"/></p>
+  </fieldset>
+</form>
+
+{% endblock %}
